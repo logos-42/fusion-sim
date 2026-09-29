@@ -1,0 +1,144 @@
+{
+  "versions": {
+    "jax": "0.4.38",
+    "jaxlib": "0.4.38",
+    "torax": "1.0.3",
+    "gymtorax": "1.0.0",
+    "gymnasium": "1.3.0",
+    "devices": [
+      "TFRT_CPU_0"
+    ],
+    "platform": "cpu"
+  },
+  "episodes": {
+    "random": {
+      "rows": [
+        {
+          "seed": 0,
+          "return": 3.303819609591636,
+          "steps": 151,
+          "seconds": 95.94,
+          "sec_per_step": 0.635,
+          "final_scalars": {
+            "tau_E": 3.2605528267832895,
+            "Q_fusion": 2.7578271066961095,
+            "beta_N": 1.4285240825735166,
+            "P_alpha_total": 17218230.559932977,
+            "n_e_volume_avg": 6.434025524894189e+19,
+            "T_i_volume_avg": 5.594421530941526,
+            "W_thermal_total": 157925703.59642574,
+            "H98": 1.2166678933167858,
+            "q95": 6.331973018485194
+          }
+        },
+        {
+          "seed": 1,
+          "return": 3.2476886164840697,
+          "steps": 151,
+          "seconds": 32.78,
+          "sec_per_step": 0.217,
+          "final_scalars": {
+            "tau_E": 2.5400462665722836,
+            "Q_fusion": 1.4973861580863723,
+            "beta_N": 1.2636744289315471,
+            "P_alpha_total": 13555696.685327895,
+            "n_e_volume_avg": 6.550012238597131e+19,
+            "T_i_volume_avg": 5.282750178006568,
+            "W_thermal_total": 149406101.85987622,
+            "H98": 1.0172997005664075,
+            "q95": 6.025014758030989
+          }
+        },
+        {
+          "seed": 2,
+          "return": 3.2875812809908385,
+          "steps": 151,
+          "seconds": 33.48,
+          "sec_per_step": 0.222,
+          "final_scalars": {
+            "tau_E": 3.6494402748815253,
+            "Q_fusion": 2.6257463613080776,
+            "beta_N": 1.4853464567466654,
+            "P_alpha_total": 13305530.427870993,
+            "n_e_volume_avg": 5.6162018600813036e+19,
+            "T_i_volume_avg": 5.534435588739205,
+            "W_thermal_total": 141022379.03382978,
+            "H98": 1.4154080474933357,
+            "q95": 7.530794866883664
+          }
+        }
+      ],
+      "return_mean": 3.279696502355515,
+      "steps_mean": 151,
+      "sec_per_step_mean": 0.358,
+      "step_cap": null
+    },
+    "scripted_iter_hybrid": {
+      "rows": [
+        {
+          "seed": 0,
+          "return": 3.4086073726730395,
+          "steps": 151,
+          "seconds": 80.49,
+          "sec_per_step": 0.533,
+          "final_scalars": {
+            "tau_E": 2.376515432187795,
+            "Q_fusion": 7.676961865519323,
+            "beta_N": 1.9410649266973894,
+            "P_alpha_total": 82503809.58225238,
+            "n_e_volume_avg": 1.082901779282785e+20,
+            "T_i_volume_avg": 6.35641619103349,
+            "W_thermal_total": 323772860.16373116,
+            "H98": 0.9866094544244834,
+            "q95": 4.0868382538290655
+          }
+        },
+        {
+          "seed": 1,
+          "return": 3.4086073726730395,
+          "steps": 151,
+          "seconds": 51.4,
+          "sec_per_step": 0.34,
+          "final_scalars": {
+            "tau_E": 2.376515432187795,
+            "Q_fusion": 7.676961865519323,
+            "beta_N": 1.9410649266973894,
+            "P_alpha_total": 82503809.58225238,
+            "n_e_volume_avg": 1.082901779282785e+20,
+            "T_i_volume_avg": 6.35641619103349,
+            "W_thermal_total": 323772860.16373116,
+            "H98": 0.9866094544244834,
+            "q95": 4.0868382538290655
+          }
+        },
+        {
+          "seed": 2,
+          "return": 3.4086073726730395,
+          "steps": 151,
+          "seconds": 31.55,
+          "sec_per_step": 0.209,
+          "final_scalars": {
+            "tau_E": 2.376515432187795,
+            "Q_fusion": 7.676961865519323,
+            "beta_N": 1.9410649266973894,
+            "P_alpha_total": 82503809.58225238,
+            "n_e_volume_avg": 1.082901779282785e+20,
+            "T_i_volume_avg": 6.35641619103349,
+            "W_thermal_total": 323772860.16373116,
+            "H98": 0.9866094544244834,
+            "q95": 4.0868382538290655
+          }
+        }
+      ],
+      "return_mean": 3.4086073726730395,
+      "steps_mean": 151,
+      "sec_per_step_mean": 0.3606666666666667,
+      "step_cap": null
+    }
+  },
+  "notes": [
+    "PIDAgent 未跑:构造需要 get_j_target/ramp_rate/kp/ki/kd,包内无示例",
+    "PIDAgent 未跑:构造需要 get_j_target/ramp_rate/kp/ki/kd,包内无示例"
+  ],
+  "env_check": "ok"
+}

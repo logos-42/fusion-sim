@@ -1,0 +1,612 @@
+{
+  "generated_by": "scripts/verify_sim.py",
+  "fast": false,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "episodes": 400,
+  "eval_episodes": 20,
+  "passed": 32,
+  "failed": 0,
+  "skipped": 4,
+  "skipped_names": [
+    "[work] 已知缺口:线性 Q 未稳定做到「不开裂窗口」",
+    "[work] 已知缺口:v0 策略未达穷举参考的 95%(需在文档里登记实测比例)",
+    "[locking] 已知缺口:线性 Q 未稳定做到「不开裂窗口」",
+    "[locking] 已知缺口:v0 策略未达穷举参考的 95%(需在文档里登记实测比例)"
+  ],
+  "checks": [
+    {
+      "group": "G1",
+      "name": "300 步后 1−μ 与 Lean 数值一致(η=0.05, μ₀=0)",
+      "ok": true,
+      "payload": "期望 2.075303e-07 / 实际 2.075303e-07"
+    },
+    {
+      "group": "G1",
+      "name": "min m_eff² 与 Lean 数值一致(300 步轨道)",
+      "ok": true,
+      "payload": "期望 4.306884e-14 / 实际 4.306884e-14"
+    },
+    {
+      "group": "G1",
+      "name": "闭式解 vs 递推(60 组 μ₀/η/n)",
+      "ok": true,
+      "payload": "最大差 6.661e-16;其中浮点饱和 19 组(实数域仍 μ_n<1)"
+    },
+    {
+      "group": "G1",
+      "name": "441 网格(21×21)有界不超调:μ' ∈ [0,1]",
+      "ok": true,
+      "payload": "下界违反 0 / 上界违反 0"
+    },
+    {
+      "group": "G1",
+      "name": "严格推进(2000 样本,η>0)",
+      "ok": true,
+      "payload": "违反 0 / 最小增量 2.756e-05"
+    },
+    {
+      "group": "G1",
+      "name": "TD21 窗口关闭步(η=0.05, D-T)",
+      "ok": true,
+      "payload": "期望 165 / 实际 165"
+    },
+    {
+      "group": "G2",
+      "name": "μ₀=0 且 η=0 ⟹ μ 恒为 0(μ 修正关掉)",
+      "ok": true,
+      "payload": "轨道末端 μ=0.0"
+    },
+    {
+      "group": "G2",
+      "name": "μ→0 时锁定因子 = 1、窗口余量 = 1(退化为经典 FRC 标度)",
+      "ok": true,
+      "payload": "margin=1.0 locking=1.0"
+    },
+    {
+      "group": "G2",
+      "name": "μ≡0 时窗口在 400 步内永不关闭",
+      "ok": true,
+      "payload": "closed 计数 0"
+    },
+    {
+      "group": "G2",
+      "name": "η=0 时 close_step 拒绝作答(不假装会关闭)",
+      "ok": true,
+      "payload": "raise=True"
+    },
+    {
+      "group": "G2",
+      "name": "抹平不允许让起伏变大(Q_A(v) ≤ Q_A(v₀))",
+      "ok": true,
+      "payload": "raise=True"
+    },
+    {
+      "group": "G3",
+      "name": "TD19 窗口余量沿轨道严格递减(不自行恢复)",
+      "ok": true,
+      "payload": "首 1 → 末 2.0753e-07"
+    },
+    {
+      "group": "G3",
+      "name": "TD20b 锁定因子单调递增且每步有限",
+      "ok": true,
+      "payload": "首 1 → 末 2195.12"
+    },
+    {
+      "group": "G3",
+      "name": "TD20 锁定因子分母恒正(良定义)",
+      "ok": true,
+      "payload": "min(1−μ)=2.075e-07"
+    },
+    {
+      "group": "G3",
+      "name": "TD10 质量永不归零(m_eff² > 0 全程)",
+      "ok": true,
+      "payload": "min=4.307e-14"
+    },
+    {
+      "group": "G3",
+      "name": "TD21 首次关闭的步 = n*(η=0.05, D-T)",
+      "ok": true,
+      "payload": "首次 closed 的 n=165(期望 165);之后每步都仍关闭 = True"
+    },
+    {
+      "group": "G4",
+      "name": "TD14a/TD17 见证 A:先抹平后更新 ⟹ μ'=1",
+      "ok": true,
+      "payload": "μ'=1.0"
+    },
+    {
+      "group": "G4",
+      "name": "TD17 见证 B:先更新(η=0)后抹平 ⟹ μ 不动",
+      "ok": true,
+      "payload": "μ'=0.5"
+    },
+    {
+      "group": "G4",
+      "name": "TD16 顺序差 = (1−μ)(1−η_before)",
+      "ok": true,
+      "payload": "期望 0.5 / 实际 0.5"
+    },
+    {
+      "group": "G4",
+      "name": "常数增益 η=1 ⟹ 顺序差为 0(可交换)",
+      "ok": true,
+      "payload": "差=0.0"
+    },
+    {
+      "group": "G5",
+      "name": "Gymnasium 契约(check_env)",
+      "ok": true,
+      "payload": "check_env 无异常"
+    },
+    {
+      "group": "G5",
+      "name": "reset 的观测形状/dtype 合法",
+      "ok": true,
+      "payload": "(4,) float32"
+    },
+    {
+      "group": "G5",
+      "name": "越界动作被拒",
+      "ok": true,
+      "payload": "raise=True"
+    },
+    {
+      "group": "G5",
+      "name": "同 seed 下轨迹与奖励完全可复现",
+      "ok": true,
+      "payload": "长度 30"
+    },
+    {
+      "group": "G5",
+      "name": "窗口关闭时 terminated + 罚分按算术恒等加上去",
+      "ok": true,
+      "payload": "末步回报 -98.97225937778992 closed=True 期望(含罚分) -98.97225937778992 μ: 0.9997403851570732 → 0.9997923081256586"
+    },
+    {
+      "group": "G5",
+      "name": "停(动作 0)是干净终止:回报 0、terminated",
+      "ok": true,
+      "payload": "r=0.0 terminated=True"
+    },
+    {
+      "group": "G6",
+      "name": "[work] 学到的策略在 ≥半数 seed 上赢随机基线(学习确实发生了)",
+      "ok": true,
+      "payload": "3/5 赢 | seed0: 1.097 vs 0.086 | seed1: 24.777 vs 0.069 | seed2: -65.503 vs 0.072 | seed3: 1.127 vs 0.047 | seed4: -74.133 vs 0.066"
+    },
+    {
+      "group": "G6",
+      "name": "[work] 保守学习器(表格 Q)全程不开裂窗口",
+      "ok": true,
+      "payload": "closed=[0, 0, 0, 0, 0] | 回报=[0.41, 1.34, 0.466, 0.608, 0.288](参考 38.66)"
+    },
+    {
+      "group": "G7",
+      "name": "[work] 已知缺口:线性 Q 未稳定做到「不开裂窗口」",
+      "ok": false,
+      "payload": "各 seed 打爆的评估回合数 closed=[0, 0, 20, 0, 20]"
+    },
+    {
+      "group": "G7",
+      "name": "[work] 已知缺口:v0 策略未达穷举参考的 95%(需在文档里登记实测比例)",
+      "ok": false,
+      "payload": "最差比例 -1.9176 | 参考 η=0.05 n=164 return=38.6598 | 策略停步 [54.0, 258.0, 320.0, 54.0, 330.0] | 策略终态 μ [0.799107, 0.999342, 0.999814, 0.794924, 0.999782] | 评估回合长度 [54.0, 258.0, 320.0, 54.0, 330.0] | 训练回合长度 [109.6, 113.4, 118.2, 98.8, 123.3] | 表格 Q 对照 [0.41, 1.34, 0.466, 0.608, 0.288]"
+    },
+    {
+      "group": "G7b",
+      "name": "[work] 缺口已在文档里登记(且点名失败方式)",
+      "ok": true,
+      "payload": "实测最差比例 -1.9176(这一轮) | 文档行:[work] 已知缺口 · 未解决:线性 Q 未达穷举参考的 95%,并在部分 seed 打爆窗口(closed>0);参考 return ≈ 38.66"
+    },
+    {
+      "group": "G6",
+      "name": "[locking] 学到的策略在 ≥半数 seed 上赢随机基线(学习确实发生了)",
+      "ok": true,
+      "payload": "3/5 赢 | seed0: 1.500 vs 0.086 | seed1: 23.769 vs 0.069 | seed2: -56.907 vs 0.072 | seed3: 3.309 vs 0.047 | seed4: -74.168 vs 0.066"
+    },
+    {
+      "group": "G6",
+      "name": "[locking] 保守学习器(表格 Q)全程不开裂窗口",
+      "ok": true,
+      "payload": "closed=[0, 0, 0, 0, 0] | 回报=[0.41, 1.34, 0.466, 0.608, 0.288](参考 38.62)"
+    },
+    {
+      "group": "G7",
+      "name": "[locking] 已知缺口:线性 Q 未稳定做到「不开裂窗口」",
+      "ok": false,
+      "payload": "各 seed 打爆的评估回合数 closed=[0, 0, 20, 0, 20]"
+    },
+    {
+      "group": "G7",
+      "name": "[locking] 已知缺口:v0 策略未达穷举参考的 95%(需在文档里登记实测比例)",
+      "ok": false,
+      "payload": "最差比例 -1.9203 | 参考 η=0.05 n=164 return=38.6236 | 策略停步 [65.0, 257.0, 270.0, 100.0, 330.0] | 策略终态 μ [0.854653, 0.999278, 0.999798, 0.960675, 0.999782] | 评估回合长度 [65.0, 257.0, 270.0, 100.0, 330.0] | 训练回合长度 [109.9, 113.4, 118.2, 105.2, 123.3] | 表格 Q 对照 [0.41, 1.34, 0.466, 0.608, 0.288]"
+    },
+    {
+      "group": "G7b",
+      "name": "[locking] 缺口已在文档里登记(且点名失败方式)",
+      "ok": true,
+      "payload": "实测最差比例 -1.9203(这一轮) | 文档行:[locking] 已知缺口 · 未解决:同上;参考 return ≈ 38.62"
+    }
+  ],
+  "learning": {
+    "work": {
+      "reference": {
+        "eta": 0.05,
+        "n": 164,
+        "return": 38.659839633947065
+      },
+      "rows": [
+        {
+          "seed": 0,
+          "agent": {
+            "return_mean": 1.0965952551300662,
+            "return_std": 2.220446049250313e-16,
+            "stop_step_mean": 54.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.7991073758999808,
+            "len_mean": 54.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "tabular": {
+            "return_mean": 0.41021188272238057,
+            "return_std": 0.0,
+            "stop_step_mean": 26.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.4446076551870387,
+            "len_mean": 26.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "random": {
+            "return_mean": 0.08589610556337886,
+            "return_std": 0.13556640909843445,
+            "stop_step_mean": 5.2,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.22494060395624907,
+            "len_mean": 5.2,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "train_last20": 1.6198551771547858,
+          "train_ep_len": 109.575
+        },
+        {
+          "seed": 1,
+          "agent": {
+            "return_mean": 24.776564159540293,
+            "return_std": 7.105427357601002e-15,
+            "stop_step_mean": 258.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.9993417176042041,
+            "len_mean": 258.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "tabular": {
+            "return_mean": 1.3403229721113492,
+            "return_std": 2.220446049250313e-16,
+            "stop_step_mean": 50.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.8298416405889937,
+            "len_mean": 50.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "random": {
+            "return_mean": 0.06923612559013512,
+            "return_std": 0.06206888854487647,
+            "stop_step_mean": 4.9,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.277253607532488,
+            "len_mean": 4.9,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "train_last20": -19.529908870968253,
+          "train_ep_len": 113.3625
+        },
+        {
+          "seed": 2,
+          "agent": {
+            "return_mean": -65.50268988698983,
+            "return_std": 0.0,
+            "stop_step_mean": 320.0,
+            "stopped_by_action": 0,
+            "mu_final_mean": 0.9998143233957861,
+            "len_mean": 320.0,
+            "closed_episodes": 20,
+            "episodes": 20
+          },
+          "tabular": {
+            "return_mean": 0.46628464887669463,
+            "return_std": 5.551115123125783e-17,
+            "stop_step_mean": 27.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.536978171482247,
+            "len_mean": 27.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "random": {
+            "return_mean": 0.07211610066984285,
+            "return_std": 0.08209838031327292,
+            "stop_step_mean": 5.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.24201557089529263,
+            "len_mean": 5.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "train_last20": 11.509755441237518,
+          "train_ep_len": 118.23
+        },
+        {
+          "seed": 3,
+          "agent": {
+            "return_mean": 1.1268863164663803,
+            "return_std": 2.220446049250313e-16,
+            "stop_step_mean": 54.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.7949244911805818,
+            "len_mean": 54.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "tabular": {
+            "return_mean": 0.6083490087356156,
+            "return_std": 1.1102230246251565e-16,
+            "stop_step_mean": 32.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.5379634960410293,
+            "len_mean": 32.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "random": {
+            "return_mean": 0.04676033548459977,
+            "return_std": 0.06115593307631157,
+            "stop_step_mean": 3.65,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.17022879258280044,
+            "len_mean": 3.65,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "train_last20": 1.4762931405239041,
+          "train_ep_len": 98.8475
+        },
+        {
+          "seed": 4,
+          "agent": {
+            "return_mean": -74.13272994100252,
+            "return_std": 1.4210854715202004e-14,
+            "stop_step_mean": 330.0,
+            "stopped_by_action": 0,
+            "mu_final_mean": 0.9997819634835852,
+            "len_mean": 330.0,
+            "closed_episodes": 20,
+            "episodes": 20
+          },
+          "tabular": {
+            "return_mean": 0.2884410781621233,
+            "return_std": 5.551115123125783e-17,
+            "stop_step_mean": 19.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.4041272470217578,
+            "len_mean": 19.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "random": {
+            "return_mean": 0.06633829734815659,
+            "return_std": 0.06335334306254396,
+            "stop_step_mean": 4.7,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.26661605803811045,
+            "len_mean": 4.7,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "train_last20": 13.067320170390758,
+          "train_ep_len": 123.29
+        }
+      ],
+      "worst_ratio": -1.9175643417803223
+    },
+    "locking": {
+      "reference": {
+        "eta": 0.05,
+        "n": 164,
+        "return": 38.623606558895055
+      },
+      "rows": [
+        {
+          "seed": 0,
+          "agent": {
+            "return_mean": 1.5003507760512904,
+            "return_std": 2.220446049250313e-16,
+            "stop_step_mean": 65.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.8546530494099688,
+            "len_mean": 65.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "tabular": {
+            "return_mean": 0.4101804014049524,
+            "return_std": 0.0,
+            "stop_step_mean": 26.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.4446076551870387,
+            "len_mean": 26.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "random": {
+            "return_mean": 0.08585045731162862,
+            "return_std": 0.13546750821869966,
+            "stop_step_mean": 5.2,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.22494060395624907,
+            "len_mean": 5.2,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "train_last20": 2.140494378410007,
+          "train_ep_len": 109.9325
+        },
+        {
+          "seed": 1,
+          "agent": {
+            "return_mean": 23.768672215372074,
+            "return_std": 0.0,
+            "stop_step_mean": 257.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.9992778952112602,
+            "len_mean": 257.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "tabular": {
+            "return_mean": 1.3399944803172668,
+            "return_std": 2.220446049250313e-16,
+            "stop_step_mean": 50.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.8298416405889937,
+            "len_mean": 50.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "random": {
+            "return_mean": 0.06920939225463635,
+            "return_std": 0.062034864581545356,
+            "stop_step_mean": 4.9,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.277253607532488,
+            "len_mean": 4.9,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "train_last20": -19.515399229152493,
+          "train_ep_len": 113.36
+        },
+        {
+          "seed": 2,
+          "agent": {
+            "return_mean": -56.90749397744546,
+            "return_std": 7.105427357601002e-15,
+            "stop_step_mean": 270.0,
+            "stopped_by_action": 0,
+            "mu_final_mean": 0.9997982013507517,
+            "len_mean": 270.0,
+            "closed_episodes": 20,
+            "episodes": 20
+          },
+          "tabular": {
+            "return_mean": 0.46622877885687375,
+            "return_std": 5.551115123125783e-17,
+            "stop_step_mean": 27.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.536978171482247,
+            "len_mean": 27.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "random": {
+            "return_mean": 0.07208724483001588,
+            "return_std": 0.08204461897854137,
+            "stop_step_mean": 5.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.24201557089529263,
+            "len_mean": 5.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "train_last20": 8.500353307710345,
+          "train_ep_len": 118.23
+        },
+        {
+          "seed": 3,
+          "agent": {
+            "return_mean": 3.309062967043799,
+            "return_std": 4.440892098500626e-16,
+            "stop_step_mean": 100.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.9606747091546518,
+            "len_mean": 100.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "tabular": {
+            "return_mean": 0.6082946592489907,
+            "return_std": 1.1102230246251565e-16,
+            "stop_step_mean": 32.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.5379634960410293,
+            "len_mean": 32.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "random": {
+            "return_mean": 0.046744648011832,
+            "return_std": 0.061121352138083083,
+            "stop_step_mean": 3.65,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.17022879258280044,
+            "len_mean": 3.65,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "train_last20": 3.5259052482289093,
+          "train_ep_len": 105.205
+        },
+        {
+          "seed": 4,
+          "agent": {
+            "return_mean": -74.1680218048925,
+            "return_std": 0.0,
+            "stop_step_mean": 330.0,
+            "stopped_by_action": 0,
+            "mu_final_mean": 0.9997819634835852,
+            "len_mean": 330.0,
+            "closed_episodes": 20,
+            "episodes": 20
+          },
+          "tabular": {
+            "return_mean": 0.2884161237705823,
+            "return_std": 5.551115123125783e-17,
+            "stop_step_mean": 19.0,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.4041272470217578,
+            "len_mean": 19.0,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "random": {
+            "return_mean": 0.0663081048255667,
+            "return_std": 0.06330524327966505,
+            "stop_step_mean": 4.7,
+            "stopped_by_action": 20,
+            "mu_final_mean": 0.26661605803811045,
+            "len_mean": 4.7,
+            "closed_episodes": 0,
+            "episodes": 20
+          },
+          "train_last20": 12.76456434354233,
+          "train_ep_len": 123.29
+        }
+      ],
+      "worst_ratio": -1.9202769604593422
+    }
+  }
+}

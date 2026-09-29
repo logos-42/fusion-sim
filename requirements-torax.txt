@@ -1,0 +1,5 @@
+jax==0.4.38
+jaxlib==0.4.38
+torax==1.0.3
+gymtorax==1.0.0
+gymnasium>=1.0
