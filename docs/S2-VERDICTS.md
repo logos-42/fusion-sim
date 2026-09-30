@@ -80,9 +80,16 @@
 
 ## 7. 未做（TODO，不是通过项）
 
-逐点 R_ci 基准表 × 全工作区；**2-D 两流体 / Hall-MHD**（Dedalus 本机装不上：构建要 MPI + FFTW
-头文件，本机无 brew/sudo ⟹ 走自写 2-D 谱求解器，或换 conda/docker）；噪声**重跑物理**；
-排序通道的 μ=0 基线独立标定；真实诊断仪器规格接入；动理学复核（Gkeyll，S4）。
+逐点 R_ci 基准表 × 全工作区；**2-D 两流体 / Hall-MHD**（Dedalus 本机装不上，见下方更正）；
+噪声**重跑物理**；排序通道的 μ=0 基线独立标定；真实诊断仪器规格接入；动理学复核（Gkeyll，S4）。
+
+**Dedalus 装不上的准确失败点（更正）**：致命步骤是编译 C 扩展 `dedalus/core/transposes.c` 时
+clang 带着 `-arch arm64 -arch x86_64 … -fopenmp`（**universal2 + OpenMP**）失败 —— 本机没有
+libomp，Apple clang 不支持 `-fopenmp`；日志里 "Looking for mpi include path:" 是**另一个**障碍
+（缺 MPI / FFTW 头）。两条可走的修法（都不需 sudo）：
+① `ARCHFLAGS="-arch x86_64"` + 装 libomp（去掉 universal2 与 OpenMP 依赖）；
+② 用 miniforge 装到 `$HOME`（conda-forge 有 dedalus 预编译包），无须系统包管理器。
+本仓当前选择：自写 2-D 谱求解器（反正 μ 项在开源码里不存在，方程都得自己写），Dedalus 留作可选交叉验证。
 
 ## 8. 诚实边界
 
