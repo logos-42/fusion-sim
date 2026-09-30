@@ -117,6 +117,7 @@ def one_run(args) -> dict:
     finite = bool(np.all(np.isfinite(a_mode)))
     out = {
         "tag": tag, "mu": mu, "geom": gname, "nsteps": nsteps, "N": n, "Ny": ny, "dt": dt,
+        "L": L, "IX": IX, "IY_OBL": IY_OBL, "geom_seeds": [list(x) for x in seeds],
         "probe": list(probe), "n_seed_modes": len(seeds), "fit_window": [fit_lo, fit_hi],
         "finite": finite,
         "gamma_mode": fm, "gamma_chord": fc,
@@ -146,6 +147,7 @@ def main() -> int:
                     help="拟合窗口下沿（实振幅）；默认 20·seed")
     ap.add_argument("--fit_hi", type=float, default=0.05,
                     help="拟合窗口上沿（实振幅）；必须由「振幅分段 γ 曲线」实测确认在纯指数段内")
+    ap.add_argument("--dt", type=float, default=DT, help="时间步长（非线性段必须 ≤0.005）")
     ap.add_argument("--out", default="artifacts/s3_grid")
     args = ap.parse_args()
     mus = [float(x) for x in args.mus.split(",") if x.strip()]
@@ -161,15 +163,15 @@ def main() -> int:
     jobs = []
     for mu in mus:
         for gname in geoms:
-            jobs.append((mu, gname, args.nsteps, args.N, args.N, DT, f"{gname}_mu{mu:g}",
+            jobs.append((mu, gname, args.nsteps, args.N, args.N, args.dt, f"{gname}_mu{mu:g}",
                          fit_lo, fit_hi))
     # 收敛复核：dt 减半（2 点）+ 横向粗化（1 点）
-    jobs.append((0.0, "共线", args.nsteps, args.N, args.N, DT / 2, "收敛_dt半_共线_mu0", fit_lo, fit_hi))
-    jobs.append((1e-2, "非共线", args.nsteps, args.N, args.N, DT / 2, "收敛_dt半_非共线_mu0.01", fit_lo, fit_hi))
-    jobs.append((1e-2, "非共线", args.nsteps, args.N, args.N // 2, DT, "收敛_Ny半_非共线_mu0.01", fit_lo, fit_hi))
+    jobs.append((0.0, "共线", args.nsteps, args.N, args.N, args.dt / 2, "收敛_dt半_共线_mu0", fit_lo, fit_hi))
+    jobs.append((1e-2, "非共线", args.nsteps, args.N, args.N, args.dt / 2, "收敛_dt半_非共线_mu0.01", fit_lo, fit_hi))
+    jobs.append((1e-2, "非共线", args.nsteps, args.N, args.N // 2, args.dt, "收敛_Ny半_非共线_mu0.01", fit_lo, fit_hi))
 
-    print(f"任务 {len(jobs)} 个，{args.procs} 进程；每点 {args.nsteps} 步，N={args.N}², dt={DT}；"
-          f"拟合窗口 [{fit_lo:g}, {fit_hi:g}]", flush=True)
+    print(f"任务 {len(jobs)} 个，{args.procs} 进程；每点 {args.nsteps} 步，N={args.N}², dt={args.dt}；"
+          f"拟合窗口 [{fit_lo:g}, {fit_hi:g}]；L={L}, IX={IX}", flush=True)
     t0 = time.perf_counter()
     done = []
     with mp.Pool(args.procs) as pool:
@@ -186,7 +188,7 @@ def main() -> int:
     # 汇总：以 μ=0 共线为基准算 R_ci，再按几何看 2-D 偏差
     base = {}
     for r in done:
-        if r["geom"] == "共线" and r["dt"] == DT and r["Ny"] == args.N:
+        if r["geom"] == "共线" and r["dt"] == args.dt and r["Ny"] == args.N:
             base[r["mu"]] = r
     print("\n=== 基准表（R_ci = γ_meas(μ)/γ_meas(μ=0) − 1；等效 μ = 2·R_ci）===", flush=True)
     hdr = f"{'几何':<8}{'μ':>8}{'γ_mode':>12}{'γ_chord':>12}{'R_ci(mode)':>12}{'等效μ':>10}{'真值μ':>9}{'ΔR_ci(2D)':>12}"
@@ -194,7 +196,7 @@ def main() -> int:
     rows = []
     g0 = base.get(0.0, {}).get("gamma_mode", {}).get("gamma", float("nan"))
     for r in sorted(done, key=lambda x: (x["geom"], x["mu"])):
-        if r["dt"] != DT or r["Ny"] != args.N:
+        if r["dt"] != args.dt or r["Ny"] != args.N:
             continue
         gm = r["gamma_mode"]["gamma"]
         gc = r["gamma_chord"]["gamma"]
@@ -211,13 +213,14 @@ def main() -> int:
 
     print("\n=== 收敛复核 ===", flush=True)
     for r in done:
-        if r["dt"] != DT or r["Ny"] != args.N:
+        if r["dt"] != args.dt or r["Ny"] != args.N:
             print(f"  {r['tag']:26s} γ_mode={r['gamma_mode']['gamma']:.6f} "
                   f"(n={r['gamma_mode']['n']}) 新模={r['new_mode_frac_end']:.2e}", flush=True)
 
     (outdir / "summary.json").write_text(json.dumps(
         {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "wall_s": wall, "L": L, "IX": IX,
-         "nsteps": args.nsteps, "N": args.N, "dt": DT, "rows": rows,
+         "nsteps": args.nsteps, "N": args.N, "dt": args.dt, "fit_window": [fit_lo, fit_hi],
+         "rows": rows,
          "raw": [{k: v for k, v in r.items() if k != "top_modes"} for r in done]},
         ensure_ascii=False, indent=2, default=str))
     print(f"\nRESULT: {len(done)}/{len(jobs)} 完成，总机时 {wall:.0f}s（{wall/60:.1f} 分钟）"
