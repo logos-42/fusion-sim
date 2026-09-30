@@ -58,50 +58,72 @@ def gamma_linear(kx: float, mu: float = 0.0) -> float:
     return float(np.max(r.imag)) if r.size else 0.0
 
 
-def fit_gamma(t: np.ndarray, a: np.ndarray) -> dict:
-    """按**实振幅**的绝对窗口 [20·seed, 0.05] 拟合 ln A = γt + c。"""
-    lo, hi = 20.0 * SEED, 0.05
+def fit_gamma(t: np.ndarray, a: np.ndarray, lo: float, hi: float) -> dict:
+    """在显式振幅窗口 [lo, hi] 上拟合 ln A = γt + c，并做**自带有效性自检**：
+    窗口前后两半各自拟合，两者之差就是"窗口是否落在纯指数段"的证据。
+    窗口不合法时（非线性/数值污染）前后半会给出明显不同的 γ —— 直接写进表里，不靠事后追查。
+    """
     m = (a > lo) & (a < hi)
     if int(m.sum()) < 10:
-        return {"gamma": float("nan"), "r2": float("nan"), "n": int(m.sum())}
-    A = np.vstack([t[m], np.ones(int(m.sum()))]).T
-    sol, res, *_ = np.linalg.lstsq(A, np.log(a[m]), rcond=None)
-    ss = float(np.sum((np.log(a[m]) - np.log(a[m]).mean()) ** 2))
-    return {"gamma": float(sol[0]), "r2": float(1.0 - res[0] / ss) if ss > 0 else float("nan"),
-            "n": int(m.sum())}
+        return {"gamma": float("nan"), "r2": float("nan"), "n": int(m.sum()),
+                "gamma_lo_half": float("nan"), "gamma_hi_half": float("nan"), "half_gap": float("nan")}
+
+    def _fit(mask):
+        A = np.vstack([t[mask], np.ones(int(mask.sum()))]).T
+        sol, res, *_ = np.linalg.lstsq(A, np.log(a[mask]), rcond=None)
+        ss = float(np.sum((np.log(a[mask]) - np.log(a[mask]).mean()) ** 2))
+        return float(sol[0]), (float(1.0 - res[0] / ss) if ss > 0 else float("nan"))
+
+    g, r2 = _fit(m)
+    mm = (a > lo) & (a < np.sqrt(lo * hi))          # 下半（振幅靠前）
+    mh = (a > np.sqrt(lo * hi)) & (a < hi)          # 上半
+    gl = _fit(mm)[0] if int(mm.sum()) >= 5 else float("nan")
+    gh = _fit(mh)[0] if int(mh.sum()) >= 5 else float("nan")
+    gap = abs(gh - gl) / abs(g) if np.isfinite(gl) and np.isfinite(gh) else float("nan")
+    return {"gamma": g, "r2": r2, "n": int(m.sum()),
+            "gamma_lo_half": gl, "gamma_hi_half": gh, "half_gap": gap}
 
 
 def one_run(args) -> dict:
-    mu, gname, nsteps, n, ny, dt, tag = args
+    mu, gname, nsteps, n, ny, dt, tag, fit_lo, fit_hi = args
     t0 = time.perf_counter()
     seeds = GEOMS[gname]
     sim = two_stream_default_2d(mu=mu, L=L, N=n, Ny=ny, seed_modes=seeds[0], seed_list=seeds)
     probe = seeds[0]
-    ts, a_mode, a_chord = [], [], []
+    ts, a_mode, a_chord, hi_frac, harm = [], [], [], [], []
     for i in range(1, nsteps + 1):
         sim.step(dt)
         if i % 20 == 0:
             rho = sim.rho()
             pert = rho - rho.mean()
-            # ① 真模幅：单模系数 → 实振幅
-            amp_mode = 2.0 * sim.mode_amp(*probe) / n
-            # ② 弦积分幅：沿 y 平均（只留 ky = 0）后取 x 的模系数
-            chord = pert.mean(axis=1)
-            amp_chord = 2.0 * abs(np.fft.fft(chord)[probe[0]]) / n
+            rh = np.fft.fft2(pert)
+            p = np.abs(rh) ** 2
+            tot = float(p.sum())
+            idx = np.arange(n)
+            idx = np.minimum(idx, n - idx)
+            mhi = idx > n // 4
+            hi_frac.append(float(p[mhi, :].sum() / tot) if tot > 0 else 0.0)
+            harm.append(float(np.sqrt(p[2 * probe[0] % n, 0] / p[probe[0], probe[1]]))
+                        if p[probe[0], probe[1]] > 0 else 0.0)
+            cs = pert.mean(axis=1)
             ts.append(i * dt)
-            a_mode.append(amp_mode)
-            a_chord.append(amp_chord)
+            a_mode.append(2.0 * sim.mode_amp(*probe) / n)
+            a_chord.append(2.0 * abs(np.fft.fft(cs)[probe[0]]) / n)
     ts = np.array(ts)
     a_mode = np.array(a_mode)
     a_chord = np.array(a_chord)
-    fm = fit_gamma(ts, a_mode)
-    fc = fit_gamma(ts, a_chord)
+    fm = fit_gamma(ts, a_mode, fit_lo, fit_hi)
+    fc = fit_gamma(ts, a_chord, fit_lo, fit_hi)
+    finite = bool(np.all(np.isfinite(a_mode)))
     out = {
         "tag": tag, "mu": mu, "geom": gname, "nsteps": nsteps, "N": n, "Ny": ny, "dt": dt,
-        "probe": list(probe), "n_seed_modes": len(seeds),
+        "probe": list(probe), "n_seed_modes": len(seeds), "fit_window": [fit_lo, fit_hi],
+        "finite": finite,
         "gamma_mode": fm, "gamma_chord": fc,
         "gamma_analytic_mu0": gamma_linear(probe[0] * 2 * np.pi / L, 0.0),
         "gamma_analytic_this_mu": gamma_linear(probe[0] * 2 * np.pi / L, mu),
+        "high_k_frac_at_top": float(hi_frac[-1]) if hi_frac else float("nan"),
+        "harmonic_ratio_at_top": float(harm[-1]) if harm else float("nan"),
         "new_mode_frac_end": sim.new_mode_fraction(seeds),
         "transverse_frac_end": sim.transverse_fraction(),
         "amp_mode_end": float(a_mode[-1]),
@@ -120,6 +142,10 @@ def main() -> int:
                     help="逗号分隔的 μ 子集（冒烟用）")
     ap.add_argument("--geoms", default=",".join(GEOMS),
                     help="逗号分隔的几何子集（冒烟用）")
+    ap.add_argument("--fit_lo", type=float, default=20.0 * SEED,
+                    help="拟合窗口下沿（实振幅）；默认 20·seed")
+    ap.add_argument("--fit_hi", type=float, default=0.05,
+                    help="拟合窗口上沿（实振幅）；必须由「振幅分段 γ 曲线」实测确认在纯指数段内")
     ap.add_argument("--out", default="artifacts/s3_grid")
     args = ap.parse_args()
     mus = [float(x) for x in args.mus.split(",") if x.strip()]
@@ -131,26 +157,30 @@ def main() -> int:
     outdir = ROOT / args.out
     outdir.mkdir(parents=True, exist_ok=True)
 
+    fit_lo, fit_hi = args.fit_lo, args.fit_hi
     jobs = []
     for mu in mus:
         for gname in geoms:
-            jobs.append((mu, gname, args.nsteps, args.N, args.N, DT, f"{gname}_mu{mu:g}"))
+            jobs.append((mu, gname, args.nsteps, args.N, args.N, DT, f"{gname}_mu{mu:g}",
+                         fit_lo, fit_hi))
     # 收敛复核：dt 减半（2 点）+ 横向粗化（1 点）
-    jobs.append((0.0, "共线", args.nsteps, args.N, args.N, DT / 2, "收敛_dt半_共线_mu0"))
-    jobs.append((1e-2, "非共线", args.nsteps, args.N, args.N, DT / 2, "收敛_dt半_非共线_mu0.01"))
-    jobs.append((1e-2, "非共线", args.nsteps, args.N, args.N // 2, DT, "收敛_Ny半_非共线_mu0.01"))
+    jobs.append((0.0, "共线", args.nsteps, args.N, args.N, DT / 2, "收敛_dt半_共线_mu0", fit_lo, fit_hi))
+    jobs.append((1e-2, "非共线", args.nsteps, args.N, args.N, DT / 2, "收敛_dt半_非共线_mu0.01", fit_lo, fit_hi))
+    jobs.append((1e-2, "非共线", args.nsteps, args.N, args.N // 2, DT, "收敛_Ny半_非共线_mu0.01", fit_lo, fit_hi))
 
-    print(f"任务 {len(jobs)} 个，{args.procs} 进程；每点 {args.nsteps} 步，N={args.N}², dt={DT}", flush=True)
+    print(f"任务 {len(jobs)} 个，{args.procs} 进程；每点 {args.nsteps} 步，N={args.N}², dt={DT}；"
+          f"拟合窗口 [{fit_lo:g}, {fit_hi:g}]", flush=True)
     t0 = time.perf_counter()
     done = []
     with mp.Pool(args.procs) as pool:
         for r in pool.imap_unordered(one_run, jobs):
             done.append(r)
             (outdir / f"{r['tag']}.json").write_text(json.dumps(r, ensure_ascii=False, indent=2, default=str))
+            gm = r["gamma_mode"]
             print(f"  [完成 {len(done)}/{len(jobs)}] {r['tag']:26s} "
-                  f"γ_mode={r['gamma_mode']['gamma']:.6f}(n={r['gamma_mode']['n']}) "
-                  f"γ_chord={r['gamma_chord']['gamma']:.6f} 新模={r['new_mode_frac_end']:.2e} "
-                  f"{r['wall_s']:.0f}s", flush=True)
+                  f"γ_mode={gm['gamma']:.6f}(n={gm['n']},半差={gm['half_gap']:.1e}) "
+                  f"γ_chord={r['gamma_chord']['gamma']:.6f} 高频={r['high_k_frac_at_top']:.1e} "
+                  f"谐波={r['harmonic_ratio_at_top']:.1e} 有限={r['finite']} {r['wall_s']:.0f}s", flush=True)
 
     wall = time.perf_counter() - t0
     # 汇总：以 μ=0 共线为基准算 R_ci，再按几何看 2-D 偏差
