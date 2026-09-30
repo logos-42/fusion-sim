@@ -157,7 +157,18 @@ def main() -> int:
     else:
         print("SKIP S2-7: hushfusion 不在")
 
-    # ── S2-8：未做项登记（**不是通过项**）──
+    # ── S2-8：上游口径变更登记必须还在（防止被悄悄删掉）──
+    doc = ROOT / "docs" / "S2-VERDICTS.md"
+    if doc.exists():
+        txt = doc.read_text(encoding="utf-8")
+        need = ["口径变更登记", "配置枚举", "theory-mu-topology.md", "局部变形", "阈值能量"]
+        miss = [k for k in need if k not in txt]
+        check("S2-8: S2-VERDICTS.md 里保留「口径变更登记」（非局部支 ⟹ μ 是离散配置标签）",
+              not miss, {"缺失": miss} if miss else {"命中": len(need)})
+    else:
+        check("S2-8: S2-VERDICTS.md 存在", False, "missing")
+
+    # ── S2-9：未做项登记（**不是通过项**）──
     todo = ["逐点 R_ci 零假设基准表 × 全工作区（当前只在参考点做系统性预算）",
             "2-D 两流体 / Hall-MHD：Dedalus 本机装不上（构建要 MPI+FFTW 头，无 brew/sudo）⟹ 自写 2-D 谱求解器或换 conda/docker",
             "噪声**重跑物理**（当前噪声加在诊断信号上）",
