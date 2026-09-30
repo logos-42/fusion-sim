@@ -1,0 +1,1261 @@
+{
+  "ts": "2026-09-30T09:51:18",
+  "wall_s": 582.1560993827879,
+  "L": 348.9,
+  "IX": 34,
+  "nsteps": 1200,
+  "N": 256,
+  "dt": 0.01,
+  "fit_window": [
+    5e-05,
+    0.001
+  ],
+  "rows": [
+    {
+      "tag": "共线_mu0",
+      "geom": "共线",
+      "mu": 0.0,
+      "gamma_mode": 0.3535532531148776,
+      "gamma_chord": 0.3535532531148763,
+      "R_ci_mode": 0.0,
+      "equiv_mu": 0.0,
+      "true_mu": 0.0,
+      "dR_ci_2d": 0.0,
+      "new_mode_frac": 1.5301360473563008e-05
+    },
+    {
+      "tag": "共线_mu0.0001",
+      "geom": "共线",
+      "mu": 0.0001,
+      "gamma_mode": 0.3535709257698917,
+      "gamma_chord": 0.3535709257698825,
+      "R_ci_mode": 4.998583624504782e-05,
+      "equiv_mu": 9.997167249009564e-05,
+      "true_mu": 0.0001,
+      "dR_ci_2d": 0.0,
+      "new_mode_frac": 1.5314420347745106e-05
+    },
+    {
+      "tag": "共线_mu0.001",
+      "geom": "共线",
+      "mu": 0.001,
+      "gamma_mode": 0.35373000951617656,
+      "gamma_chord": 0.35373000951617745,
+      "R_ci_mode": 0.0004999427943079837,
+      "equiv_mu": 0.0009998855886159674,
+      "true_mu": 0.001,
+      "dR_ci_2d": 0.0,
+      "new_mode_frac": 1.5432444947949264e-05
+    },
+    {
+      "tag": "共线_mu0.01",
+      "geom": "共线",
+      "mu": 0.01,
+      "gamma_mode": 0.35532382316507083,
+      "gamma_chord": 0.35532382316507083,
+      "R_ci_mode": 0.005007930303551511,
+      "equiv_mu": 0.010015860607103022,
+      "true_mu": 0.01,
+      "dR_ci_2d": 0.0,
+      "new_mode_frac": 1.6662131875566644e-05
+    },
+    {
+      "tag": "共线_mu0.1",
+      "geom": "共线",
+      "mu": 0.1,
+      "gamma_mode": 0.3715814707908919,
+      "gamma_chord": 0.3715814707908869,
+      "R_ci_mode": 0.05099151971359883,
+      "equiv_mu": 0.10198303942719766,
+      "true_mu": 0.1,
+      "dR_ci_2d": 0.0,
+      "new_mode_frac": 3.560584996076255e-05
+    },
+    {
+      "tag": "宽谱_mu0",
+      "geom": "宽谱",
+      "mu": 0.0,
+      "gamma_mode": 0.35355137771734535,
+      "gamma_chord": NaN,
+      "R_ci_mode": -5.304427312613491e-06,
+      "equiv_mu": -1.0608854625226982e-05,
+      "true_mu": 0.0,
+      "dR_ci_2d": -5.304427312613491e-06,
+      "new_mode_frac": 0.00020934579445230916
+    },
+    {
+      "tag": "宽谱_mu0.0001",
+      "geom": "宽谱",
+      "mu": 0.0001,
+      "gamma_mode": 0.3535690496248076,
+      "gamma_chord": NaN,
+      "R_ci_mode": 4.467929453566555e-05,
+      "equiv_mu": 8.93585890713311e-05,
+      "true_mu": 0.0001,
+      "dR_ci_2d": -5.306541709382273e-06,
+      "new_mode_frac": 0.000209524041701048
+    },
+    {
+      "tag": "宽谱_mu0.001",
+      "geom": "宽谱",
+      "mu": 0.001,
+      "gamma_mode": 0.35372812662856973,
+      "gamma_chord": NaN,
+      "R_ci_mode": 0.000494617181857171,
+      "equiv_mu": 0.000989234363714342,
+      "true_mu": 0.001,
+      "dR_ci_2d": -5.325612450812756e-06,
+      "new_mode_frac": 0.00021113487906876394
+    },
+    {
+      "tag": "宽谱_mu0.01",
+      "geom": "宽谱",
+      "mu": 0.01,
+      "gamma_mode": 0.3553218714496845,
+      "gamma_chord": NaN,
+      "R_ci_mode": 0.00500241001666657,
+      "equiv_mu": 0.01000482003333314,
+      "true_mu": 0.01,
+      "dR_ci_2d": -5.520286884941328e-06,
+      "new_mode_frac": 0.00022791623604057065
+    },
+    {
+      "tag": "宽谱_mu0.1",
+      "geom": "宽谱",
+      "mu": 0.1,
+      "gamma_mode": 0.3715789644585166,
+      "gamma_chord": NaN,
+      "R_ci_mode": 0.05098443073236836,
+      "equiv_mu": 0.10196886146473672,
+      "true_mu": 0.1,
+      "dR_ci_2d": -7.0889812304741895e-06,
+      "new_mode_frac": 0.00048612991966323627
+    },
+    {
+      "tag": "非共线_mu0",
+      "geom": "非共线",
+      "mu": 0.0,
+      "gamma_mode": 0.3535531248359509,
+      "gamma_chord": NaN,
+      "R_ci_mode": -3.6282773685503145e-07,
+      "equiv_mu": -7.256554737100629e-07,
+      "true_mu": 0.0,
+      "dR_ci_2d": -3.6282773685503145e-07,
+      "new_mode_frac": 3.051975058820933e-05
+    },
+    {
+      "tag": "非共线_mu0.0001",
+      "geom": "非共线",
+      "mu": 0.0001,
+      "gamma_mode": 0.35357079743928843,
+      "gamma_chord": NaN,
+      "R_ci_mode": 4.962286234455604e-05,
+      "equiv_mu": 9.924572468911208e-05,
+      "true_mu": 0.0001,
+      "dR_ci_2d": -3.629739004917809e-07,
+      "new_mode_frac": 3.054567865690139e-05
+    },
+    {
+      "tag": "非共线_mu0.001",
+      "geom": "非共线",
+      "mu": 0.001,
+      "gamma_mode": 0.35372988071855554,
+      "gamma_chord": NaN,
+      "R_ci_mode": 0.0004995784994814567,
+      "equiv_mu": 0.0009991569989629134,
+      "true_mu": 0.001,
+      "dR_ci_2d": -3.6429482652700074e-07,
+      "new_mode_frac": 3.0779991179952226e-05
+    },
+    {
+      "tag": "非共线_mu0.01",
+      "geom": "非共线",
+      "mu": 0.01,
+      "gamma_mode": 0.3553236895976116,
+      "gamma_chord": NaN,
+      "R_ci_mode": 0.005007552517579894,
+      "equiv_mu": 0.010015105035159788,
+      "true_mu": 0.01,
+      "dR_ci_2d": -3.777859716169729e-07,
+      "new_mode_frac": 3.322081232171037e-05
+    },
+    {
+      "tag": "非共线_mu0.1",
+      "geom": "非共线",
+      "mu": 0.1,
+      "gamma_mode": 0.3715812991662822,
+      "gamma_chord": NaN,
+      "R_ci_mode": 0.050991034285708725,
+      "equiv_mu": 0.10198206857141745,
+      "true_mu": 0.1,
+      "dR_ci_2d": -4.854278901067488e-07,
+      "new_mode_frac": 7.074909930115947e-05
+    }
+  ],
+  "raw": [
+    {
+      "tag": "共线_mu0.1",
+      "mu": 0.1,
+      "geom": "共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          0
+        ]
+      ],
+      "probe": [
+        34,
+        0
+      ],
+      "n_seed_modes": 1,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.3715814707908919,
+        "r2": 0.9999999999998913,
+        "n": 41,
+        "gamma_lo_half": 0.371581622708638,
+        "gamma_hi_half": 0.3715811985242776,
+        "half_gap": 1.1415648887344319e-06
+      },
+      "gamma_chord": {
+        "gamma": 0.3715814707908869,
+        "r2": 0.9999999999998913,
+        "n": 41,
+        "gamma_lo_half": 0.37158162270860995,
+        "gamma_hi_half": 0.37158119852427907,
+        "half_gap": 1.1415648094075066e-06
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.3715816448570192,
+      "high_k_frac_at_top": 3.560584996093187e-05,
+      "harmonic_ratio_at_top": 0.005967169997798385,
+      "new_mode_frac_end": 3.560584996076255e-05,
+      "transverse_frac_end": 0.0,
+      "amp_mode_end": 0.0022171722917073257,
+      "wall_s": 370.06699079088867
+    },
+    {
+      "tag": "宽谱_mu0.1",
+      "mu": 0.1,
+      "geom": "宽谱",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          3
+        ],
+        [
+          34,
+          9
+        ],
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -3
+        ],
+        [
+          34,
+          -9
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        3
+      ],
+      "n_seed_modes": 6,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.3715789644585166,
+        "r2": 0.9999999999735308,
+        "n": 41,
+        "gamma_lo_half": 0.3715813188074076,
+        "gamma_hi_half": 0.37157471505595896,
+        "half_gap": 1.777213480919939e-05
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.3715816448570192,
+      "high_k_frac_at_top": 0.0004860574036696792,
+      "harmonic_ratio_at_top": 0.03087903563231155,
+      "new_mode_frac_end": 0.00048612991966323627,
+      "transverse_frac_end": 0.9998411636599428,
+      "amp_mode_end": 0.0022168431343532586,
+      "wall_s": 374.44786853156984
+    },
+    {
+      "tag": "共线_mu0.01",
+      "mu": 0.01,
+      "geom": "共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          0
+        ]
+      ],
+      "probe": [
+        34,
+        0
+      ],
+      "n_seed_modes": 1,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.35532382316507083,
+        "r2": 0.9999999999999304,
+        "n": 42,
+        "gamma_lo_half": 0.35532394124376004,
+        "gamma_hi_half": 0.35532362361723313,
+        "half_gap": 8.939072085966033e-07
+      },
+      "gamma_chord": {
+        "gamma": 0.35532382316507083,
+        "r2": 0.9999999999999304,
+        "n": 42,
+        "gamma_lo_half": 0.35532394124376004,
+        "gamma_hi_half": 0.35532362361723313,
+        "half_gap": 8.939072085966033e-07
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.3553239588620777,
+      "high_k_frac_at_top": 1.666213187557142e-05,
+      "harmonic_ratio_at_top": 0.004081961477872616,
+      "new_mode_frac_end": 1.6662131875566644e-05,
+      "transverse_frac_end": 0.0,
+      "amp_mode_end": 0.001979773482067569,
+      "wall_s": 377.00547453947365
+    },
+    {
+      "tag": "非共线_mu0.0001",
+      "mu": 0.0001,
+      "geom": "非共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        17
+      ],
+      "n_seed_modes": 2,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.35357079743928843,
+        "r2": 0.9999999999997287,
+        "n": 42,
+        "gamma_lo_half": 0.3535710260683549,
+        "gamma_hi_half": 0.35357040509380505,
+        "half_gap": 1.7562947911247617e-06
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.3535710562515648,
+      "high_k_frac_at_top": 3.0538224755288644e-05,
+      "harmonic_ratio_at_top": 0.005518077101895525,
+      "new_mode_frac_end": 3.054567865690139e-05,
+      "transverse_frac_end": 0.9999847758775942,
+      "amp_mode_end": 0.0019551262628463117,
+      "wall_s": 377.4871595352888
+    },
+    {
+      "tag": "宽谱_mu0.01",
+      "mu": 0.01,
+      "geom": "宽谱",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          3
+        ],
+        [
+          34,
+          9
+        ],
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -3
+        ],
+        [
+          34,
+          -9
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        3
+      ],
+      "n_seed_modes": 6,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.3553218714496845,
+        "r2": 0.9999999999829968,
+        "n": 42,
+        "gamma_lo_half": 0.3553237029302902,
+        "gamma_hi_half": 0.3553187506200126,
+        "half_gap": 1.3937532911719985e-05
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.3553239588620777,
+      "high_k_frac_at_top": 0.00022785755763402932,
+      "harmonic_ratio_at_top": 0.021149887139753257,
+      "new_mode_frac_end": 0.00022791623604057065,
+      "transverse_frac_end": 0.9999254656822959,
+      "amp_mode_end": 0.0019795857011259826,
+      "wall_s": 377.9201075974852
+    },
+    {
+      "tag": "宽谱_mu0",
+      "mu": 0.0,
+      "geom": "宽谱",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          3
+        ],
+        [
+          34,
+          9
+        ],
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -3
+        ],
+        [
+          34,
+          -9
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        3
+      ],
+      "n_seed_modes": 6,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.35355137771734535,
+        "r2": 0.9999999999842658,
+        "n": 42,
+        "gamma_lo_half": 0.3535531344171756,
+        "gamma_hi_half": 0.35354838954179224,
+        "half_gap": 1.3420610645084984e-05
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.35355338354485927,
+      "high_k_frac_at_top": 0.00020928834606145295,
+      "harmonic_ratio_at_top": 0.020270716763442664,
+      "new_mode_frac_end": 0.00020934579445230916,
+      "transverse_frac_end": 0.999931532113594,
+      "amp_mode_end": 0.001954714851440368,
+      "wall_s": 378.5360147804022
+    },
+    {
+      "tag": "收敛_dt半_共线_mu0",
+      "mu": 0.0,
+      "geom": "共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.005,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          0
+        ]
+      ],
+      "probe": [
+        34,
+        0
+      ],
+      "n_seed_modes": 1,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.3535533653911761,
+        "r2": 0.9999999999999997,
+        "n": 44,
+        "gamma_lo_half": 0.35355336693520767,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_chord": {
+        "gamma": 0.35355336539117316,
+        "r2": 0.9999999999999997,
+        "n": 44,
+        "gamma_lo_half": 0.35355336693520406,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.35355338354485927,
+      "high_k_frac_at_top": 2.2672690261935703e-07,
+      "harmonic_ratio_at_top": 0.0004761585387499179,
+      "new_mode_frac_end": 2.267269023636942e-07,
+      "transverse_frac_end": 0.0,
+      "amp_mode_end": 0.00023434062858899009,
+      "wall_s": 378.8500198237598
+    },
+    {
+      "tag": "宽谱_mu0.0001",
+      "mu": 0.0001,
+      "geom": "宽谱",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          3
+        ],
+        [
+          34,
+          9
+        ],
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -3
+        ],
+        [
+          34,
+          -9
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        3
+      ],
+      "n_seed_modes": 6,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.3535690496248076,
+        "r2": 0.9999999999842536,
+        "n": 42,
+        "gamma_lo_half": 0.3535708070566317,
+        "gamma_hi_half": 0.35356606015193004,
+        "half_gap": 1.3425679387616255e-05
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.3535710562515648,
+      "high_k_frac_at_top": 0.00020946658123627835,
+      "harmonic_ratio_at_top": 0.0202793369090952,
+      "new_mode_frac_end": 0.000209524041701048,
+      "transverse_frac_end": 0.9999314738820602,
+      "amp_mode_end": 0.001954962124170256,
+      "wall_s": 379.74288152717054
+    },
+    {
+      "tag": "共线_mu0.0001",
+      "mu": 0.0001,
+      "geom": "共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          0
+        ]
+      ],
+      "probe": [
+        34,
+        0
+      ],
+      "n_seed_modes": 1,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.3535709257698917,
+        "r2": 0.9999999999999356,
+        "n": 42,
+        "gamma_lo_half": 0.353571039068933,
+        "gamma_hi_half": 0.35357073467252104,
+        "half_gap": 8.609203692371477e-07
+      },
+      "gamma_chord": {
+        "gamma": 0.3535709257698825,
+        "r2": 0.9999999999999356,
+        "n": 42,
+        "gamma_lo_half": 0.35357103906891063,
+        "gamma_hi_half": 0.35357073467252237,
+        "half_gap": 8.60920302197547e-07
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.3535710562515648,
+      "high_k_frac_at_top": 1.5314420347713606e-05,
+      "harmonic_ratio_at_top": 0.0039133942917595164,
+      "new_mode_frac_end": 1.5314420347745106e-05,
+      "transverse_frac_end": 0.0,
+      "amp_mode_end": 0.001955138764710721,
+      "wall_s": 380.791522718966
+    },
+    {
+      "tag": "非共线_mu0.01",
+      "mu": 0.01,
+      "geom": "非共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        17
+      ],
+      "n_seed_modes": 2,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.3553236895976116,
+        "r2": 0.9999999999997072,
+        "n": 42,
+        "gamma_lo_half": 0.35532392781524746,
+        "gamma_hi_half": 0.3553232801795572,
+        "half_gap": 1.82266397992313e-06
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.3553239588620777,
+      "high_k_frac_at_top": 3.3213593228118926e-05,
+      "harmonic_ratio_at_top": 0.005753674665286138,
+      "new_mode_frac_end": 3.322081232171037e-05,
+      "transverse_frac_end": 0.9999834481638068,
+      "amp_mode_end": 0.0019797601933589726,
+      "wall_s": 383.490202261135
+    },
+    {
+      "tag": "非共线_mu0",
+      "mu": 0.0,
+      "geom": "非共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        17
+      ],
+      "n_seed_modes": 2,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.3535531248359509,
+        "r2": 0.9999999999997289,
+        "n": 42,
+        "gamma_lo_half": 0.3535533533701886,
+        "gamma_hi_half": 0.3535527326590575,
+        "half_gap": 1.7556375195189945e-06
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.35355338354485927,
+      "high_k_frac_at_top": 3.051229436562214e-05,
+      "harmonic_ratio_at_top": 0.005515743942375016,
+      "new_mode_frac_end": 3.051975058820933e-05,
+      "transverse_frac_end": 0.9999847887486389,
+      "amp_mode_end": 0.0019548788888103033,
+      "wall_s": 383.5139878783375
+    },
+    {
+      "tag": "非共线_mu0.001",
+      "mu": 0.001,
+      "geom": "非共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        17
+      ],
+      "n_seed_modes": 2,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.35372988071855554,
+        "r2": 0.9999999999997268,
+        "n": 42,
+        "gamma_lo_half": 0.3537301102024138,
+        "gamma_hi_half": 0.35372948685232003,
+        "half_gap": 1.7622206314559341e-06
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.35373014046324325,
+      "high_k_frac_at_top": 3.0772558210606126e-05,
+      "harmonic_ratio_at_top": 0.005539116943819665,
+      "new_mode_frac_end": 3.0779991179952226e-05,
+      "transverse_frac_end": 0.9999846595639343,
+      "amp_mode_end": 0.001957353933748733,
+      "wall_s": 384.16405916400254
+    },
+    {
+      "tag": "共线_mu0.001",
+      "mu": 0.001,
+      "geom": "共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          0
+        ]
+      ],
+      "probe": [
+        34,
+        0
+      ],
+      "n_seed_modes": 1,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.35373000951617656,
+        "r2": 0.9999999999999352,
+        "n": 42,
+        "gamma_lo_half": 0.3537301232414296,
+        "gamma_hi_half": 0.3537298176659627,
+        "half_gap": 8.638663916246938e-07
+      },
+      "gamma_chord": {
+        "gamma": 0.35373000951617745,
+        "r2": 0.9999999999999352,
+        "n": 42,
+        "gamma_lo_half": 0.3537301232414135,
+        "gamma_hi_half": 0.3537298176659594,
+        "half_gap": 8.638663553736652e-07
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.35373014046324325,
+      "high_k_frac_at_top": 1.5432444947975397e-05,
+      "harmonic_ratio_at_top": 0.003928445381064617,
+      "new_mode_frac_end": 1.5432444947949264e-05,
+      "transverse_frac_end": 0.0,
+      "amp_mode_end": 0.001957366505108743,
+      "wall_s": 384.66905267722905
+    },
+    {
+      "tag": "宽谱_mu0.001",
+      "mu": 0.001,
+      "geom": "宽谱",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          3
+        ],
+        [
+          34,
+          9
+        ],
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -3
+        ],
+        [
+          34,
+          -9
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        3
+      ],
+      "n_seed_modes": 6,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.35372812662856973,
+        "r2": 0.9999999999841434,
+        "n": 42,
+        "gamma_lo_half": 0.353729890663094,
+        "gamma_hi_half": 0.35372512545371493,
+        "half_gap": 1.3471389523092665e-05
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.35373014046324325,
+      "high_k_frac_at_top": 0.00021107730973887956,
+      "harmonic_ratio_at_top": 0.020357072150103052,
+      "new_mode_frac_end": 0.00021113487906876394,
+      "transverse_frac_end": 0.9999309476410998,
+      "amp_mode_end": 0.0019571888804271365,
+      "wall_s": 385.7267275992781
+    },
+    {
+      "tag": "非共线_mu0.1",
+      "mu": 0.1,
+      "geom": "非共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        17
+      ],
+      "n_seed_modes": 2,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.3715812991662822,
+        "r2": 0.9999999999995473,
+        "n": 41,
+        "gamma_lo_half": 0.3715816047750712,
+        "gamma_hi_half": 0.3715807435296851,
+        "half_gap": 2.317784527896984e-06
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.3715816448570192,
+      "high_k_frac_at_top": 7.074443423296278e-05,
+      "harmonic_ratio_at_top": 0.008383638062453814,
+      "new_mode_frac_end": 7.074909930115947e-05,
+      "transverse_frac_end": 0.9999648597927329,
+      "amp_mode_end": 0.0022171489853517,
+      "wall_s": 386.51615386269987
+    },
+    {
+      "tag": "共线_mu0",
+      "mu": 0.0,
+      "geom": "共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          0
+        ]
+      ],
+      "probe": [
+        34,
+        0
+      ],
+      "n_seed_modes": 1,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.3535532531148776,
+        "r2": 0.9999999999999356,
+        "n": 42,
+        "gamma_lo_half": 0.3535533663672124,
+        "gamma_hi_half": 0.3535530621010802,
+        "half_gap": 8.605949161922289e-07
+      },
+      "gamma_chord": {
+        "gamma": 0.3535532531148763,
+        "r2": 0.9999999999999356,
+        "n": 42,
+        "gamma_lo_half": 0.3535533663671977,
+        "gamma_hi_half": 0.35355306210108306,
+        "half_gap": 8.605948664202818e-07
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.35355338354485927,
+      "high_k_frac_at_top": 1.5301360473646285e-05,
+      "harmonic_ratio_at_top": 0.003911725272672049,
+      "new_mode_frac_end": 1.5301360473563008e-05,
+      "transverse_frac_end": 0.0,
+      "amp_mode_end": 0.001954891382978857,
+      "wall_s": 388.7476753182709
+    },
+    {
+      "tag": "收敛_Ny半_非共线_mu0.01",
+      "mu": 0.01,
+      "geom": "非共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 128,
+      "dt": 0.01,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        17
+      ],
+      "n_seed_modes": 2,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.35532368959757377,
+        "r2": 0.9999999999997072,
+        "n": 42,
+        "gamma_lo_half": 0.3553239278152647,
+        "gamma_hi_half": 0.35532328017944315,
+        "half_gap": 1.8226643494001603e-06
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.3553239588620777,
+      "high_k_frac_at_top": 3.321366251820698e-05,
+      "harmonic_ratio_at_top": 0.005753674665312805,
+      "new_mode_frac_end": 3.322084295753758e-05,
+      "transverse_frac_end": 0.999983448163807,
+      "amp_mode_end": 0.001979760193336837,
+      "wall_s": 97.69595448486507
+    },
+    {
+      "tag": "收敛_dt半_非共线_mu0.01",
+      "mu": 0.01,
+      "geom": "非共线",
+      "nsteps": 1200,
+      "N": 256,
+      "Ny": 256,
+      "dt": 0.005,
+      "L": 348.9,
+      "IX": 34,
+      "IY_OBL": 17,
+      "geom_seeds": [
+        [
+          34,
+          17
+        ],
+        [
+          34,
+          -17
+        ]
+      ],
+      "probe": [
+        34,
+        17
+      ],
+      "n_seed_modes": 2,
+      "fit_window": [
+        5e-05,
+        0.001
+      ],
+      "finite": true,
+      "gamma_mode": {
+        "gamma": 0.3553239259400802,
+        "r2": 0.9999999999999987,
+        "n": 44,
+        "gamma_lo_half": 0.35532392884368574,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_chord": {
+        "gamma": NaN,
+        "r2": NaN,
+        "n": 0,
+        "gamma_lo_half": NaN,
+        "gamma_hi_half": NaN,
+        "half_gap": NaN
+      },
+      "gamma_analytic_mu0": 0.35355338354485927,
+      "gamma_analytic_this_mu": 0.3553239588620777,
+      "high_k_frac_at_top": 3.9197023735310045e-07,
+      "harmonic_ratio_at_top": 0.0005483945207726862,
+      "new_mode_frac_end": 3.920244313615484e-07,
+      "transverse_frac_end": 0.9999998496317838,
+      "amp_mode_end": 0.00023481555119263256,
+      "wall_s": 212.02975205518305
+    }
+  ]
+}
