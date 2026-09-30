@@ -145,7 +145,13 @@ class TwoFluid2D(TwoFluid1D):
         return r
 
     def mode_amp(self, mode: int = 0, mode_y: int = 0) -> float:
-        return float(abs(np.fft.fft2(self.rho())[mode, mode_y]))
+        """模幅，**按 Ny 归一**，使 y 均匀时与 1-D 的 `|fft(rho)[mode]|` 逐位相等。
+
+        为什么必须除 Ny：`fft2` 对 y 均匀场给出的系数是 `fft` 的 Ny 倍（卷积可分离），
+        不除的话 S2 那套按 1-D 约定标定的拟合窗口阈值 [20·seed, 0.05] 会整体落空
+        （实测症状：窗口点 = 0，拟合返回 nan）—— 归一化不一致会被误读成"没有增长"。
+        """
+        return float(abs(np.fft.fft2(self.rho())[mode, mode_y])) / self.Ny
 
     def ky_contamination(self) -> float:
         """ky ≠ 0 的总能量 / 总能量 —— 回归门里必须 ≈ 0。"""
