@@ -35,7 +35,8 @@ class TwoFluid2D(TwoFluid1D):
     """静电 2-D 周期两流体（谱方法 + RK4）。字段布局：[x, y]。"""
 
     Ny: int = 0                     # 0 ⟹ 取 N
-    seed_modes: tuple = (4, 0)      # (ix, iy) 种子模；iy = 0 ⟹ 纯 ky = 0（回归门用）
+    seed_modes: tuple = (4, 0)      # (ix, iy) 探测模（也是默认种子模）；iy = 0 ⟹ 纯 ky = 0
+    seed_list: tuple | None = None  # 多种子（非共线必须）：((ix,iy), ...)；None ⟹ 只用 seed_modes
     x2: np.ndarray = field(init=False)
     y: np.ndarray = field(init=False)
     ky: np.ndarray = field(init=False)
@@ -64,18 +65,29 @@ class TwoFluid2D(TwoFluid1D):
         iy = np.abs(np.fft.fftfreq(self.Ny, d=1.0 / self.Ny))
         self._mask = ((ix <= self.N / 3.0)[:, None] & (iy <= self.Ny / 3.0)[None, :])
 
-        # 初值：种子模的本征矢沿 x，y 方向均匀（iy = 0）
-        u = self.unstable_eigenvector()                        # 用 1-D 线性化（ky = 0 子空间）
-        ix0, iy0 = self.seed_modes
-        phase = np.exp((1j * ix0 * 2.0 * np.pi / self.L) * self.x2)[:, None] \
-            * np.exp((1j * iy0 * 2.0 * np.pi / self.L) * self.y)[None, :]
-        self.n, self.vx, self.vy = [], [], []
-        for s, us_n, us_v in zip(self.species, u[0::2], u[1::2]):
-            self.n.append(s.n0 + self.seed * np.real(us_n * phase))
-            self.vx.append(s.v0 + self.seed * np.real(us_v * phase))
-            self.vy.append(np.zeros((self.N, self.Ny)))
+        # 初值：种子模的本征矢沿各自 k_x，y 方向按 iy 给定。
+        # **非共线多模必须用 seed_list**：单模共线（如只有 (4,0)）时，非线性卷积不会造出
+        # ky ≠ 0 分量（实测污染恒为 0.0e+00）⟹ 单模 2-D 实验是空的，横向能量转移测不到。
+        modes = self.seed_list if self.seed_list is not None else (self.seed_modes,)
+        nn = [np.full((self.N, self.Ny), s.n0) for s in self.species]
+        vxx = [np.full((self.N, self.Ny), s.v0) for s in self.species]
+        vyy = [np.zeros((self.N, self.Ny)) for s in self.species]
+        for (ix0, iy0) in modes:
+            k_here = ix0 * 2.0 * np.pi / self.L
+            u = self._eig_at(k_here)                       # 该模自己的 k_x 上的本征矢
+            phase = np.exp((1j * ix0 * 2.0 * np.pi / self.L) * self.x2)[:, None] \
+                * np.exp((1j * iy0 * 2.0 * np.pi / self.L) * self.y)[None, :]
+            for i, (_, us_n, us_v) in enumerate(zip(self.species, u[0::2], u[1::2])):
+                nn[i] = nn[i] + self.seed * np.real(us_n * phase)
+                vxx[i] = vxx[i] + self.seed * np.real(us_v * phase)
+        self.n, self.vx, self.vy = nn, vxx, vyy
 
     # ---- 谱求导（2/3 去混叠）----
+    def _eig_at(self, k: float) -> np.ndarray:
+        """给定 k 上的不稳定本征矢（父类只支持在 self.k_seed 上取，多种子需要任意 k）。"""
+        w, V = np.linalg.eig(self.linear_matrix(k))
+        return V[:, int(np.argmax(w.real))]
+
     def _grad(self, f: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         fh = np.fft.fft2(f)
         fh = np.where(self._mask, fh, 0.0)
@@ -153,6 +165,52 @@ class TwoFluid2D(TwoFluid1D):
         """
         return float(abs(np.fft.fft2(self.rho())[mode, mode_y])) / self.Ny
 
+    def new_mode_fraction(self, seeded) -> float:
+        """**种子之外**的能量占比 = 1 − Σ_{种子模}|ρ̂|² / Σ_{全部非零模}|ρ̂|²。
+
+        为什么不能只看"横向占比"：若种子本身就是 ky≠0 的模（非共线实验必然如此），
+        横向占比从 t=0 就 ≈ 1，**把种子自己算成转移**了 —— 那不是转移的证据。
+        要证明能量流进了新模，必须把种子集合排除在外：本函数 t=0 应为 0，随非线性增长。
+        """
+        rh = np.fft.fft2(self.rho()).copy()
+        rh[0, 0] = 0.0
+        tot = float(np.sum(np.abs(rh) ** 2))
+        if tot == 0.0:
+            return 0.0
+        seed_e = 0.0
+        for (ix, iy) in seeded:
+            # **必须把共轭伙伴一起减掉**：实场的 ρ̂ 满足 ρ̂[-i,-j] = conj(ρ̂[i,j])，
+            # 种一个模实际占两个（±k）。只减一个的话 t=0 就会给出 0.5 的假基线。
+            for (a, b) in ((ix, iy), ((-ix) % self.N, (-iy) % self.Ny)):
+                seed_e += float(abs(rh[a, b]) ** 2)
+        return float(1.0 - seed_e / tot)
+
+    def top_modes(self, k: int = 8) -> list[tuple]:
+        """按能量排序的前 k 个模（诊断用：看非线性把能量送进了哪些模）。"""
+        rh = np.fft.fft2(self.rho()).copy()
+        rh[0, 0] = 0.0
+        p = np.abs(rh) ** 2
+        idx = np.dstack(np.unravel_index(np.argsort(p, axis=None)[::-1][:k], p.shape))[0]
+        return [(int(i), int(j), float(p[i, j])) for i, j in idx]
+
+    def transverse_fraction(self) -> float:
+        """横向能量占比 = Σ_{k_y ≠ 0} |ρ̂|² / Σ_{全部非零模} |ρ̂|²（去掉均值模）。
+
+        这是修订后 S3 的**主观测量**：单模共线初值下它恒为 0（非线性不造 ky≠0 分量），
+        只有**非共线多种子**才会让它长起来 —— 横向能量转移/丝化的出现与否，看这一条。
+        """
+        rh = np.fft.fft2(self.rho())
+        rh = rh.copy()
+        rh[0, 0] = 0.0                                  # 去均值模
+        tot = float(np.sum(np.abs(rh) ** 2))
+        if tot == 0.0:
+            return 0.0
+        keep = np.zeros_like(rh)
+        keep[:, 0] = rh[:, 0]                           # 只留 ky = 0 的模
+        if self.Ny % 2 == 0:
+            keep[:, self.Ny // 2] = rh[:, self.Ny // 2]  # Nyquist 也属"共线"
+        return float(1.0 - np.sum(np.abs(keep) ** 2) / tot)
+
     def ky_contamination(self) -> float:
         """ky ≠ 0 的总能量 / 总能量 —— 回归门里必须 ≈ 0。"""
         rh = np.fft.fft2(self.rho())
@@ -189,7 +247,7 @@ class TwoFluid2D(TwoFluid1D):
 
 
 def two_stream_default_2d(mu: float = 0.0, L: float = 29.02, N: int = 256, Ny: int = 0,
-                          seed_modes: tuple = (4, 0)) -> TwoFluid2D:
+                          seed_modes: tuple = (4, 0), seed_list: tuple | None = None) -> TwoFluid2D:
     return TwoFluid2D([Species(0.5, -1.0, 1.0, +1.0, mu),
                        Species(0.5, -1.0, 1.0, -1.0, mu)],
-                      L=L, N=N, Ny=Ny, seed_modes=seed_modes)
+                      L=L, N=N, Ny=Ny, seed_modes=seed_modes, seed_list=seed_list)
