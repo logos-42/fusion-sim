@@ -352,14 +352,16 @@ def ops_test(g: Grid, sep: float = 2.0, t_end: float = 8.0) -> dict:
 
 
 def reconnection_event(g: Grid, sep: float = 2.0, eta0: float = 5e-2,
-                       t_end: float = 15.0) -> dict:
+                       t_end: float = 15.0, band: float = 0.30) -> dict:
     """拓扑改变通道：**无流**、只在两岛之间开电阻率（窄带）⟹ 岛合并（N_分量: 2 → 1）。
 
     口径：这里的电阻扩散项 η∇²ψ 就是 2-D 里的重联通道（改变等值线拓扑的项）。
     """
     psi0 = blobs(g, sep=sep)
     thr = initial_threshold(g, psi0, sep)
-    eta = eta0 * np.exp(-(((g.Y - math.pi + math.pi) % TWO_PI - math.pi) ** 2) / (2 * 0.6 ** 2))
+    # **带宽是关键**：窄带（默认 0.30）⟹ 两岛心处 η 几乎为 0（峰几乎不衰减），
+    # 只有两岛之间的鞍部被电阻率作用 ⟹ 把"合并"与"衰减"两个时间尺度分开（宽 0.6 时两者纠缠）。
+    eta = eta0 * np.exp(-(((g.Y - math.pi + math.pi) % TWO_PI - math.pi) ** 2) / (2 * band ** 2))
     sim, hist = run(g, psi0, np.zeros_like(psi0), eta=eta, t_end=t_end, sep=sep, thr=thr)
     t_event, E_event, prev = None, None, hist[0]["N_分量"]
     for r in hist[1:]:
